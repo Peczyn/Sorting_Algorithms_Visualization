@@ -1,0 +1,3 @@
+/Users/marcin/CLionProjects/sorting_algorithms/cmake-build-debug/CMakeFiles/sorting_algorithms.dir
+/Users/marcin/CLionProjects/sorting_algorithms/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/marcin/CLionProjects/sorting_algorithms/cmake-build-debug/CMakeFiles/rebuild_cache.dir
