@@ -181,6 +181,90 @@ void quickSort(vector<int> &arr,int low,int high)
 
 // MERGE SORT
 
+void merge(vector<int> &array, int const left,
+           int const mid, int const right)
+{
+    displayArray(array);
+    auto const subArrayOne = mid - left + 1;
+    auto const subArrayTwo = right - mid;
+
+    // Create temp arrays
+    auto *leftArray = new int[subArrayOne],
+            *rightArray = new int[subArrayTwo];
+
+    // Copy data to temp arrays leftArray[]
+    // and rightArray[]
+    for (auto i = 0; i < subArrayOne; i++)
+        leftArray[i] = array[left + i];
+    for (auto j = 0; j < subArrayTwo; j++)
+        rightArray[j] = array[mid + 1 + j];
+
+    // Initial index of first sub-array
+    // Initial index of second sub-array
+    auto indexOfSubArrayOne = 0,
+            indexOfSubArrayTwo = 0;
+
+    // Initial index of merged array
+    int indexOfMergedArray = left;
+
+    // Merge the temp arrays back into
+    // array[left..right]
+    while (indexOfSubArrayOne < subArrayOne &&
+           indexOfSubArrayTwo < subArrayTwo)
+    {
+        if (leftArray[indexOfSubArrayOne] <=
+            rightArray[indexOfSubArrayTwo])
+        {
+            array[indexOfMergedArray] =
+                    leftArray[indexOfSubArrayOne];
+            indexOfSubArrayOne++;
+        }
+        else
+        {
+            array[indexOfMergedArray] =
+                    rightArray[indexOfSubArrayTwo];
+            indexOfSubArrayTwo++;
+        }
+        indexOfMergedArray++;
+    }
+
+    // Copy the remaining elements of
+    // left[], if there are any
+    while (indexOfSubArrayOne < subArrayOne)
+    {
+        array[indexOfMergedArray] =
+                leftArray[indexOfSubArrayOne];
+        indexOfSubArrayOne++;
+        indexOfMergedArray++;
+    }
+
+    // Copy the remaining elements of
+    // right[], if there are any
+    while (indexOfSubArrayTwo < subArrayTwo)
+    {
+        array[indexOfMergedArray] =
+                rightArray[indexOfSubArrayTwo];
+        indexOfSubArrayTwo++;
+        indexOfMergedArray++;
+    }
+}
+
+// begin is for left index and end is
+// right index of the sub-array
+// of arr to be sorted */
+void mergeSort(vector<int> &array,
+               int const begin,
+               int const end)
+{
+    // Returns recursively
+    if (begin >= end)
+        return;
+
+    auto mid = begin + (end - begin) / 2;
+    mergeSort(array, begin, mid);
+    mergeSort(array, mid + 1, end);
+    merge(array, begin, mid, end);
+}
 
 
 
@@ -224,7 +308,7 @@ int main() {
             if(event.type == event.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) selectionSort(array);
             if(event.type == event.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) heapSort(array);
             if(event.type == event.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)) quickSort(array,0,n);
-            if(event.type == event.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) display.close();
+            if(event.type == event.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) mergeSort(array,0,n);
             if(event.type == event.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             {
                 shuffle(array.begin(),array.end(),default_random_engine(seed));
@@ -255,18 +339,20 @@ int main() {
 void displayArray(vector<int> array)
 {
     int n = array.size();
-    float szerokoscKolumny = display.getSize().x/(n+1);
-    float wysokoscKolumny = szerokoscKolumny*0.7f;
+    float szerokoscKolumny = float(display.getSize().x-100)/(n+1);
+    float wysokoscKolumny = float(display.getSize().y-100)/(n+1);
 
-    sf::RectangleShape kolumna(sf::Vector2f(szerokoscKolumny,szerokoscKolumny));
+    sf::RectangleShape kolumna(sf::Vector2f(szerokoscKolumny,wysokoscKolumny));
     kolumna.setOrigin(szerokoscKolumny/2,0);
-    kolumna.setPosition(10,0);
+    kolumna.setPosition(szerokoscKolumny/2,0);
+//    kolumna.setOutlineThickness();
+//    kolumna.setOutlineColor(sf::Color::Black);
 
     display.clear();
     for (int i = 0; i < n; i++) {
         kolumna.setSize(sf::Vector2f(szerokoscKolumny, array[i] * wysokoscKolumny));
         kolumna.setOrigin(szerokoscKolumny/2,0);
-        kolumna.setPosition(100 + i * szerokoscKolumny, 750-array[i] * wysokoscKolumny);
+        kolumna.setPosition(50+szerokoscKolumny/2 + float(i) * (szerokoscKolumny), float(display.getSize().y-50)-array[i] * wysokoscKolumny);
         display.draw(kolumna);
     }
     display.display();
