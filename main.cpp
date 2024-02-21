@@ -1,3 +1,17 @@
+/*
+ * This project allows you to see how different sorting algorithms works
+ * You start with randomized array of Size n
+ * To start sorting press numbers:
+ * 1 - Bubble sort
+ * 2 - Insertion sort
+ * 3 - Selection sort
+ * 4 - Heap sort
+ * 5 - Quick sort
+ * 6 - Merge sort
+ * If sorting ended you can press space to shuffle the array
+ */
+
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <set>
@@ -274,29 +288,13 @@ int main() {
     srand(time(NULL));
     display.setFramerateLimit(600);
 
-
-
-
-
-    int n = 500;
+    //Array size
+    int n = 250;
     vector<int> array;
     for(int i=1; i<n+1; i++) array.push_back(i);
 
     unsigned seed=0;
     shuffle(array.begin(),array.end(),default_random_engine(seed));
-
-
-
-
-
-
-
-
-
-
-//    int k, j;
-//
-//    bool swapped = true;
 
     while(display.isOpen())
     {
@@ -313,23 +311,9 @@ int main() {
             {
                 shuffle(array.begin(),array.end(),default_random_engine(seed));
             }
-
         }
-
-
-//        heapSort(array,array.size());
-//        selectionSort(array);
-//        insertionSort(array);
-
-
-
-
         displayArray(array);
-
     }
-
-
-
     return 0;
 }
 
@@ -345,8 +329,6 @@ void displayArray(vector<int> array)
     sf::RectangleShape kolumna(sf::Vector2f(szerokoscKolumny,wysokoscKolumny));
     kolumna.setOrigin(szerokoscKolumny/2,0);
     kolumna.setPosition(szerokoscKolumny/2,0);
-//    kolumna.setOutlineThickness();
-//    kolumna.setOutlineColor(sf::Color::Black);
 
     display.clear();
     for (int i = 0; i < n; i++) {
