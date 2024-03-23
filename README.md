@@ -1,4 +1,4 @@
-## Java Sorting Algorithm Visualizer
+## C++ Sorting Algorithm Visualizer
 
 This project is a C++-based sorting algorithm visualizer, allowing you to interactively explore and understand various sorting algorithms. Sorting algorithms are essential tools in computer science, used to arrange elements of a list or array in a specific order.
 
